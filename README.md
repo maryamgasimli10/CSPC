@@ -29,3 +29,14 @@ The observed decay data closely follows the theoretical exponential curve ($\lam
  Tracks file timestamps to run plot.py only when input files change, avoiding redundant runs when outputs are up to date**
 ** conclusion**
 Successfully integrated data visualization with workflow automation, ensuring figures remain reproducible and automatically rebuilt upon data changes.
+
+## PW2 - Lab A:
+**What i built:**
+Computed velocity and acceleration from noisy 1D position measurements using np.gradient. Reconstructed velocity and position using scipy.integrate.cumulative_trapezoid to observe noise suppression through integration. Created a three-panel plot saved as motion.png showing position, velocity, and acceleration over time.  
+**reports on noise and integrating**
+Measured Mean Acceleration: -9.81 m/s² (roughly -9.8 m/s², confirming free fall under standard gravity). 
+Why Acceleration Was Noisy: Numerical differentiation compares neighboring data points, which magnifies measurement noise in position—differentiating twice amplifies this noise to the point where individual acceleration values swing wildly despite smooth position data.   
+What Integrating Back Showed: Integration acts as a sum, causing random noise to cancel out; reconstructing position from noisy acceleration restored the trajectory within about a meter of the original, proving that integration suppresses noise.  
+**conclusion**
+Differentiation amplifies noise, whereas integration suppresses noise.
+
