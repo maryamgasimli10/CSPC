@@ -1,0 +1,71 @@
+# CSPC — Computer Science for Physics and Chemistry
+## Lab A Work
+My coursework repository. Each practical is under PW<n>/Lab <X>/.
+## Setup
+Create the environment for a given lab:
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
+---
+## PW1 - Lab A: Reproducible Foundations
+**What I built:**
+- Set up CSPC Git repository with a virtual environment, verified unit tests for radioactive decay simulation using pytest, and benchmarked NumPy speedup against standard Python loops.
+
+**Speed comparison (loop vs NumPy):**
+- loop: 0.0114 s
+- numpy: 0.0025 s
+- speed-up: 4.60x faster
+**Tests:** all passing? yes
+**Conclusion:**
+- Successfully established a reproducible Python environment. Verified that vectorizing array operations with NumPy provides a 4.60x speedup over pure Python loops.  because my computer couldn't download conda with permission of my teacher i replaced it with uv
+
+##PW1 - Lab B:
+**What i built:**
+A Python script (plot.py) reading decay_observed.csv and creating a $1 \times 2$ subplot comparing raw data to the analytical law $N_0 e^{-\lambda t}$.   A Snakefile pipeline automating the generation of figure.png
+**Data vs Analytical Match:
+The observed decay data closely follows the theoretical exponential curve ($\lambda = 0.3$) across all time steps.  
+ Snakemake Pipeline:
+ Tracks file timestamps to run plot.py only when input files change, avoiding redundant runs when outputs are up to date**
+** conclusion**
+Successfully integrated data visualization with workflow automation, ensuring figures remain reproducible and automatically rebuilt upon data changes>
+
+## PW2 - Lab A:
+**What i built:**
+Computed velocity and acceleration from noisy 1D position measurements using np.gradient. Reconstructed velocity and position using scipy.integrate.cumulative_trapezoid to observe noise suppression through integration. Created a three-panel plot saved as motion.png showing position, velocity, and acceleration over time.  
+**reports on noise and integrating**
+Measured Mean Acceleration: -9.81 m/s² (roughly -9.8 m/s², confirming free fall under standard gravity). 
+Why Acceleration Was Noisy: Numerical differentiation compares neighboring data points, which magnifies measurement noise in position—differentiating twice amplifies this noise to the point where individual acceleration values swing wildly despite smooth position data.   
+What Integrating Back Showed: Integration acts as a sum, causing random noise to cancel out; reconstructing position from noisy acceleration restored the trajectory within about a meter of the original, proving that integration suppresses noise.  
+**conclusion**
+Differentiation amplifies noise, whereas integration suppresses noise.
+
+##PW2 - Lab B:
+What i built:
+Compared three optimisation methods (gradient descent, Newton's method, and SLSQP) on convex and complex functions
+ Applied optimisation to real chemistry problems by fitting a first-order reaction rate constant from noisy data 
+ (kinetics.png), solving for a chemical equilibrium extent using both root-finding and minimisation (equilibrium.png), and 
+ locating a titration's equivalence point via numerical differentiation (titration.png). All work completed in PW2/Lab B/ of the CSPC repository.
+
+
+Part 2 (Three Routes to a Minimum):
+ On the easy convex function $f(x)$, all three methods 
+(Gradient Descent, Newton's method, and SLSQP) successfully agreed and reached the global minimum at $x \approx 3$. 
+On the harder landscape $g(x)$, the choice of starting point ($x_0 = 0.0$ vs $x_0 = 2.0$) heavily changed the outcome, causing the algorithms to land in entirely different local valleys. Newton's method solved for $g'(x) = 0$, but checking the second derivative ($g''(x)$) revealed that it occasionally landed
+ on a maximum ($g'' < 0$) or a minimum ($g'' > 0$) depending on the initial guess.
+ Part 3 (Fit a Reaction Rate): 
+ Minimising the sum of squared errors between the model $C(t) = C_0 e^{-kt}$ and noisy measurements using
+  SLSQP yielded a fitted rate constant of $k \approx 0.25$, with the resulting decay curve passing neatly through the experimental data points (saved as kinetics.png)
+Part 4 (Chemical Equilibrium): 
+Solving the equilibrium imbalance equation via scipy.optimize.newton and scipy.optimize.minimize (SLSQP) gave 
+complete agreement ($x \approx 0.66$), yielding equilibrium amounts of $H_2 \approx 0.34\text{ mol}$, $I_2 \approx 0.34\text{ mol}$, and $HI \approx 1.33\text{ mol}$ (saved composition plot as equilibrium.png
+Part 5 (Titration Equivalence Point): 
+Computing the first derivative of the pH curve with np.gradient and finding the maximum slope via np.argmax successfully 
+located the titration's equivalence point at approximately $50\text{ mL}$, where the pH jumps sharply (saved side-by-side plots as titration.png). 
+
+
+
+conclusion
+On simple landscapes, gradient descent, Newton's method, and SLSQP yield identical results,
+ but on complex optimization landscapes, starting points and algorithm behavior dictate the outcome. Numerical optimisation serves as a powerful tool across chemistry for curve-fitting 
+ kinetics, solving equilibrium conditions, and finding inflection points.
